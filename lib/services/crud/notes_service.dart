@@ -1,5 +1,6 @@
 //create, update, delete notes in the user interface
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/crud/crud_crudexceptions.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,6 +10,19 @@ import 'package:path_provider/path_provider.dart';
 
 class NotesService{
   Database? _db;
+
+  List<DatabaseNote> _notes = [];
+
+  //listen to the changes, from outside
+  final _notesStreamController = 
+    StreamController<List<DatabaseNote>>.broadcast();
+
+  //the prefix(underscore, '_') shows the private function must be used in the class
+  Future<void> _cacheNotes() async{
+    final allNotes = await getAllNotes();
+    _notes = allNotes.toList();
+    _notesStreamController.add(_notes);
+  }
 
   //get current db
   Database _getDatabaseOrThrow(){
@@ -21,7 +35,7 @@ class NotesService{
   }
 
   //close opened database
-  Future<void>close () async{
+  Future<void> close () async{
     final db = _db;
     if(db == null){
       throw DatabaseIsNotOpen();
@@ -48,8 +62,11 @@ class NotesService{
       //create user table if not exist
       await db.execute(createNoteTable);
 
+      //read all notes
+      await _cacheNotes();
+
     }on MissingPlatformDirectoryException{
-      throw UnableToGetDocuments();
+      throw UnableToGetDocumentsDirectory();
     }
   }
 
@@ -135,6 +152,12 @@ class NotesService{
       isSyncedWithCloud: true
     );
 
+    //add to array of note and stream controller
+    _notes.add(note);
+
+    //reflect the value inside underscore nodes to outside world
+    _notesStreamController.add(_notes);
+
     return note;
   }
 
@@ -184,7 +207,12 @@ class NotesService{
   //delete all node
   Future<int>deleteAllNotes() async{
     final db = _getDatabaseOrThrow();
-    return await db.delete(noteTable);
+    final numberOfDeletions = await db.delete(noteTable); //return num of deleted notes
+    //reset notes to empty
+    _notes = [];
+    //update stream controller
+    _notesStreamController.add(_notes);
+    return numberOfDeletions;
   }
 
   //delete note
@@ -198,7 +226,13 @@ class NotesService{
     );
     if(deletedCount == 0){
       throw CouldNotDeleteNote();
+    }else{
+      //remove note from local cache
+      _notes.removeWhere((note) => note.id == id);
+      _notesStreamController.add(_notes);
     }
+
+
   }
 
   
