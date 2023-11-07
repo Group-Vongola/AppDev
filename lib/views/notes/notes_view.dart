@@ -34,7 +34,7 @@ class _NotesViewState extends State<NotesView> {
           IconButton(
             onPressed: (){
               //pushNamed -> push a new page on the current page, and able to get back to it
-              Navigator.of(context).pushNamed(newNoteRoute);
+              Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
             }, 
             icon: const Icon(Icons.add)
           ),
@@ -86,7 +86,14 @@ class _NotesViewState extends State<NotesView> {
                           //to delete note
                           onDeleteNote: (note)async{
                             await _notesService.deleteNote(id: note.id);
-                          }
+                          },
+                          //to edit note
+                          onTap: (note){
+                            Navigator.of(context).pushNamed(
+                              createOrUpdateNoteRoute,
+                              arguments: note,
+                            );
+                          },
                         );
                       }else{
                         return const CircularProgressIndicator();
