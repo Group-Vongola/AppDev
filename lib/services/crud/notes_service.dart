@@ -13,6 +13,12 @@ class NotesService{
 
   List<DatabaseNote> _notes = [];
 
+  //make note service a singleton
+  static final NotesService _shared = NotesService._sharedInstance();
+  NotesService._sharedInstance();
+  //factory contstructor
+  factory NotesService() => _shared;
+
   //listen to the changes, from outside
   final _notesStreamController = 
     StreamController<List<DatabaseNote>>.broadcast();

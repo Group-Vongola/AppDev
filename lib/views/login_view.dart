@@ -5,6 +5,7 @@ import 'package:flutter_application_1/services/auth/auth_service.dart';
 import 'package:flutter_application_1/utilities/show_error_dialog.dart';
 
 
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -98,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
                 );
             }
           }, 
-            child: const Text('Login'),
+          child: const Text('Login'),    
           ),
           TextButton(
             onPressed: (){
