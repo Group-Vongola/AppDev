@@ -15,13 +15,22 @@ class NotesService{
 
   //make note service a singleton
   static final NotesService _shared = NotesService._sharedInstance();
-  NotesService._sharedInstance();
+
+
+  NotesService._sharedInstance(){
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      //populate note in stream controller
+      onListen: (){
+        _notesStreamController.sink.add(_notes);
+      },
+    );
+  }
+  
   //factory contstructor
   factory NotesService() => _shared;
 
   //listen to the changes, from outside
-  final _notesStreamController = 
-    StreamController<List<DatabaseNote>>.broadcast();
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
 
   //get all notes
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
