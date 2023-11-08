@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 //immutable->all fields in the class or subclass must be constant
 @immutable
 class AuthUser{
-  //optional string
-  final String? email;
+  final String id;
+  //optional string if use ?
+  final String email;
   final bool isEmailVerified;
   const AuthUser({
+    required this.id,
     required this.email, 
     required this.isEmailVerified,
   });
@@ -15,7 +17,8 @@ class AuthUser{
   //factory initializer, use the constructor in line 8
   //this is to limit the exposure of properties of firebase's user
   factory AuthUser.fromFirebase(User user) => AuthUser(
-    email: user.email,
+    id: user.uid,
+    email: user.email!,
     isEmailVerified: user.emailVerified,
   );
 
