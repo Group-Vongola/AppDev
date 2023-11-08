@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/extensions/filter.dart';
 import 'package:flutter_application_1/services/crud/crud_crudexceptions.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart'show join;
@@ -12,6 +13,9 @@ class NotesService{
   Database? _db;
 
   List<DatabaseNote> _notes = [];
+
+  //keep hold on user
+  DatabaseUser? _user;
 
   //make note service a singleton
   static final NotesService _shared = NotesService._sharedInstance();
@@ -33,15 +37,32 @@ class NotesService{
   late final StreamController<List<DatabaseNote>> _notesStreamController;
 
   //get all notes
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNotes => 
+    _notesStreamController.stream.filter((note) {
+      final currentUser = _user;
+      if(currentUser != null){
+        return note.userId == currentUser.id;
+      }else{
+        throw UserShouldBeSetBeforeReadingAllNotes();
+      }
+    });
 
   //get or create user
-  Future<DatabaseUser> getOrCreateUser({required String email}) async{
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setAsCurrentUser = true,
+    }) async{
     try{
       final user = await getUser(email: email);
+      if(setAsCurrentUser){
+        _user = user;
+      }
       return user;
     }on CouldNotFindUser{
       final createdUser = await createUser(email: email);
+      if(setAsCurrentUser){
+        _user = createdUser;
+      }
       return createdUser;
     }catch (e){
       rethrow;
@@ -50,9 +71,9 @@ class NotesService{
 
   //the prefix(underscore, '_') shows the private function must be used in the class
   Future<void> _cacheNotes() async{
-    final allNotes = await getAllNotes();
-    _notes = allNotes.toList();
-    _notesStreamController.add(_notes);
+    final allNotes = await getAllNotes();  //read all notes
+    _notes = allNotes.toList();            //put in local variable
+    _notesStreamController.add(_notes);    //populate in stream controller
   }
 
   //ensure db is open
@@ -249,10 +270,14 @@ class NotesService{
     await getNote(id: note.id);
 
     //update database
-    final updatesCount = await db.update(noteTable, {
-      textColumn: text,
-      isSyncedWithCloudColumn: 0, //not yet sync with cloud
-    });
+    final updatesCount = await db.update(
+      noteTable, {
+        textColumn: text,
+        isSyncedWithCloudColumn: 0, //not yet sync with cloud
+      },
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
 
     if(updatesCount == 0){
       throw CouldNotUpdateNote();
