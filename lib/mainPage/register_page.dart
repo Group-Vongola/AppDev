@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/routes.dart';
 import 'package:flutter_application_1/services/auth/auth_exceptions.dart';
@@ -15,6 +16,15 @@ class _RegisterView extends State<Register>{
   //late = wait for later input
   late final TextEditingController _email;
   late final TextEditingController _password;
+  bool _isObscure = true;
+  bool showProgress = false;
+  var options = [
+    'Business owner',
+    'Customer',
+    'Delivery man',
+  ];
+  var _currentItemSelected = 'Business owner';
+  var role = 'Business owner';
 
   @override
     void initState() {
@@ -29,10 +39,16 @@ class _RegisterView extends State<Register>{
       _password.dispose();
       super.dispose();
     }
+
+
+
+
     
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
+      
       backgroundColor: const Color.fromARGB(255, 175, 219, 255),
       appBar: AppBar(
         backgroundColor: Colors.purple,
@@ -48,11 +64,11 @@ class _RegisterView extends State<Register>{
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 100),
+          padding: const EdgeInsets.only(top: 50),
           child: Container(
             color: Colors.white,
-            height: 400,
-            margin: EdgeInsets.symmetric(horizontal: 50),
+            height: 550,
+            margin: EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,33 +87,140 @@ class _RegisterView extends State<Register>{
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextFormField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'firstName',
+                          contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 15.0
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
+                          //draw underline
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'lastName',
+                          contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 15.0
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
+                          //draw underline
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                       TextFormField(
+                        controller: _email,
                         keyboardType: TextInputType.emailAddress,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'email',
+                          contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 15.0
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
+                          //draw underline
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                       TextFormField(
-                        obscureText: true,
+                        controller: _password,
+                        obscureText: _isObscure,
                         enableSuggestions: false,
                         autocorrect: false,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                                icon: Icon(_isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscure = !_isObscure;
+                                  });
+                                }),
+                          
                           hintText: 'password',
+                          contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 15.0
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
+                          //draw underline
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.black),
+                            borderRadius: new BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                     ],
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Role : ",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 204, 200, 200), 
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: DropdownButton<String>(
+                        dropdownColor: Colors.blue[200],
+                        isDense: true,
+                        isExpanded: false,
+                        iconEnabledColor: Colors.black,
+                        focusColor: Colors.black,
+                        items: options.map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: Text(
+                              dropDownStringItem,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (newValueSelected) {
+                          setState(() {
+                            _currentItemSelected = newValueSelected!;
+                            role = newValueSelected;
+                          });
+                        },
+                        value: _currentItemSelected,
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -129,6 +252,9 @@ class _RegisterView extends State<Register>{
                           final password = _password.text;
                           try{
                             //initial sign up/register
+                            setState(() {
+                            showProgress = true;
+                            });
                             await AuthService.firebase().createUser(
                               email: email, 
                               password: password
@@ -138,6 +264,7 @@ class _RegisterView extends State<Register>{
                             //pushNamed->will not replace the page to new page, just appear on it
                             // ignore: use_build_context_synchronously
                             Navigator.of(context).pushNamed(verifyEmailRoute);
+
                           }on WeakPasswordAuthException{
                             // ignore: use_build_context_synchronously
                             await showErrorDialog(
@@ -163,6 +290,7 @@ class _RegisterView extends State<Register>{
                               'Failed to register',
                             );
                           }
+                          
                         }, 
                         child: Text(
                           'Register',
@@ -195,7 +323,6 @@ class _RegisterView extends State<Register>{
                       child: const Text('Already registered? Login here!',
                         style: TextStyle(
                         decoration: TextDecoration.underline,
-                        
                         ),
                       ),
                     ),
