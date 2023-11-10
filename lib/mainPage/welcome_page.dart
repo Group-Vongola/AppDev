@@ -1,51 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/routes.dart';
 
-class HomeMainPage extends StatelessWidget {
-  const HomeMainPage({super.key});
+class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    //function for the button
-    Widget button({
-      required String name,
-      required Color color,
-      required Color textColor,
-    }){
-      return Container(
-        height: 55,
-        width: 200,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            //change the color of button
-            backgroundColor: color,
-            minimumSize: Size(188, 36),
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            //change the border to rounded side
-            shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25)),
-            ),
-            //construct shadow color
-            elevation: 10,
-            shadowColor: const Color.fromARGB(255, 92, 90, 85),
-          ).copyWith(
-            //change color onpressed
-            overlayColor: MaterialStateProperty.resolveWith<Color?>(
-              (Set<MaterialState> states) {  
-                if (states.contains(MaterialState.pressed))
-                  return Colors.blue;
-                return null; // Defer to the widget's default.
-            }),
-          ),
-          onPressed: () {  }, 
-          child: Text(
-            name,
-            style: TextStyle(color: textColor, fontSize: 25),
-          ),
-        ),           
-      );
-    }
-    
     return Scaffold(
       body: Column(
         children: [
@@ -70,9 +30,80 @@ class HomeMainPage extends StatelessWidget {
                           color:Colors.blue,
                         ),
                   ),
-                  button(name: 'Login', color: Colors.purple, textColor: Colors.white),
-                  button(name: 'Register', color: Colors.orange, textColor: Colors.black),
-
+                  Container(
+                    height: 55,
+                    width: 200,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        //change the color of button
+                        backgroundColor: Colors.purple,
+                        minimumSize: Size(188, 36),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        //change the border to rounded side
+                        shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        //construct shadow color
+                        elevation: 10,
+                        shadowColor: const Color.fromARGB(255, 92, 90, 85),
+                      ).copyWith(
+                        //change color onpressed
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {  
+                            if (states.contains(MaterialState.pressed))
+                              return Colors.blue;
+                            return null; // Defer to the widget's default.
+                        }),
+                      ),
+                      onPressed: () { 
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          loginRoute, 
+                          (route) => false,
+                        );
+                       }, 
+                      child: Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    ),           
+                  ),
+                  Container(
+                    height: 55,
+                    width: 200,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        //change the color of button
+                        backgroundColor: Colors.orange,
+                        minimumSize: Size(188, 36),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        //change the border to rounded side
+                        shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        //construct shadow color
+                        elevation: 10,
+                        shadowColor: const Color.fromARGB(255, 92, 90, 85),
+                      ).copyWith(
+                        //change color onpressed
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {  
+                            if (states.contains(MaterialState.pressed))
+                              return Colors.blue;
+                            return null; // Defer to the widget's default.
+                        }),
+                      ),
+                      onPressed: () { 
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          registerRoute, 
+                          (route) => false,
+                        );
+                       }, 
+                      child: Text(
+                        'Register',
+                        style: TextStyle(color: Colors.black, fontSize: 25),
+                      ),
+                    ),           
+                  ),
                 ],
               ),
             ),

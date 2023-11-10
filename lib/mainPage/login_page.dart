@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/routes.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -12,7 +13,10 @@ class LoginPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white), 
           onPressed: () { 
-
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              welcomeRoute, 
+              (route) => false,
+            );
           },
         ),
       ),
@@ -92,11 +96,11 @@ class LoginPage extends StatelessWidget {
                           return null; // Defer to the widget's default.
                       }),
                     ),
-                    onPressed: () {  }, 
                     child: const Text(
                       'Login',
                       style: TextStyle(color: Colors.black, fontSize: 25),
                     ),
+                    onPressed: () {  }, 
                   ),           
                 ),
                 Row(
@@ -104,11 +108,12 @@ class LoginPage extends StatelessWidget {
                   children: [
                   TextButton(
                     onPressed: (){
+
                       //on pressed, will lead to register page
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //   registerRoute, 
-                      //   (route) => false,
-                      // );
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        registerRoute, 
+                        (route) => false,
+                      );
                     },
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -119,7 +124,11 @@ class LoginPage extends StatelessWidget {
                         }
                       ),
                     ),
-                    child: const Text('Not registered yet? Register here!'),
+                    child: const Text('Not registered yet? Register here!',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   )
                 ],),
               ],
