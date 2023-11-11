@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // title: ,
       // theme: ThemeData(),
-      home: const VerifyEmailView(),
+      home: const WelcomePage(),
       routes: {
         loginRoute:(context) => const LoginPage(),
         registerRoute:(context) => const Register(),
