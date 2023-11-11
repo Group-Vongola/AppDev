@@ -10,6 +10,17 @@ class DeliverymanHomePage extends StatefulWidget {
 class _DeliverymanHomePageState extends State<DeliverymanHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+      ),
+      body: Container(
+        child: Text(
+          'Delivery Man', 
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
   }
+  
 }

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/services/auth/auth_exceptions.dart';
 import 'package:flutter_application_1/services/auth/auth_service.dart';
 import 'package:flutter_application_1/utilities/dialogs/error_dialog.dart';
 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -175,15 +176,17 @@ class _LoginPageState extends State<LoginPage> {
                               email: emailController.text, 
                               password: passwordController.text,
                             );
-
-                            final user = AuthService.firebase().currentUser;
+                            
+                            final user = AuthService.firebase().currentUser!;
+                            final userId = user.id;
                             if(user?.isEmailVerified??false){
-                              FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user!.id)
+                              await FirebaseFirestore.instance.collection('users')
+                              .doc()
                               .get()
-                              .then((DocumentSnapshot documentSnapshot){
+                              .then((DocumentSnapshot documentSnapshot) async {
+                                
                                 if(documentSnapshot.exists){
+                                  
                                   if(documentSnapshot.get('role') == "Business owner"){
                                     Navigator.of(context).pushNamedAndRemoveUntil(
                                         businessOwnerRoute, 
@@ -202,8 +205,16 @@ class _LoginPageState extends State<LoginPage> {
                                     );
                                   }
                                   else{
-                                    
+                                    await showErrorDialog(
+                                      context, 
+                                      'Invalid account',
+                                    );
                                   }
+                                }else{
+                                  await showErrorDialog(
+                                    context, 
+                                    'Document does not exist',
+                                  );
                                 }
                               });
                             }else{
