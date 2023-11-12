@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                             final userId = user.id;
                             if(user?.isEmailVerified??false){
                               await FirebaseFirestore.instance.collection('users')
-                              .doc()
+                              .doc(userId)
                               .get()
                               .then((DocumentSnapshot documentSnapshot) async {
                                 
@@ -231,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                                 context, 
                                 'User not found. Please ensure you enter correct email and password',
                               );
-                          } on GenericAuthException{
+                          }on GenericAuthException{
                               // ignore: use_build_context_synchronously
                               await showErrorDialog(
                                 context, 

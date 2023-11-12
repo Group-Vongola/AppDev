@@ -381,9 +381,11 @@ class _RegisterView extends State<Register>{
 }
 
 void postDetailsToFirestore(String fName, String lName, String email, String role) async{
-  CollectionReference account = FirebaseFirestore.instance.collection('users');
   final currentUser = AuthService.firebase().currentUser!;
   final userId = currentUser.id;
-  account.add({'firstName':fName, 'lastName':lName, 'email':email, 'role': role, 'id': userId});
+  FirebaseFirestore.instance
+    .collection('users')
+    .doc(userId)
+    .set({'firstName':fName, 'lastName':lName, 'email':email, 'role': role, 'id': userId});
 }
 

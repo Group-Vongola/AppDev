@@ -7,3 +7,4 @@ const welcomeRoute = '/welcome/';
 const customerRoute = '/cust_homepage/';
 const businessOwnerRoute = '/owner_homepage/';
 const deliveryManOwnerRoute = '/delivery_homepage/';
+const custProfileRoute = '/customer profile/';

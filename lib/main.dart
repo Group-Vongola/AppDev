@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/constants/routes.dart';
 import 'package:flutter_application_1/mainPage/business_owner_page/owner_homepage.dart';
 import 'package:flutter_application_1/mainPage/customer_page/cust_homepage.dart';
+import 'package:flutter_application_1/mainPage/customer_page/cust_profile.dart';
 import 'package:flutter_application_1/mainPage/deliveryman_page/delivery_homepage.dart';
 import 'package:flutter_application_1/mainPage/login_page.dart';
 import 'package:flutter_application_1/mainPage/register_page.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // title: ,
       // theme: ThemeData(),
-      home: const BusinessOwnerHomePage(),
+      home: const CustomerProfilePage(),
       routes: {
         loginRoute:(context) => const LoginPage(),
         registerRoute:(context) => const Register(),
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         customerRoute:(context) => const CustomerHomePage(),
         businessOwnerRoute:(context) => const BusinessOwnerHomePage(),
         deliveryManOwnerRoute:(context) => const DeliverymanHomePage(),
+        custProfileRoute:(context) => const CustomerProfilePage(),
         
       },
     );
