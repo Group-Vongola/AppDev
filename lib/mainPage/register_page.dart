@@ -69,146 +69,148 @@ class _RegisterView extends State<Register>{
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Container(
-                      height: 300,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            controller: firstNameController,
-                            decoration: InputDecoration(
-                              hintText: 'firstName',
-                              contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 15.0
+                  SizedBox(
+                    height: 325,
+                    child: Expanded(
+                      child: Container(
+                          height: 300,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                controller: firstNameController,
+                                decoration: InputDecoration(
+                                  hintText: 'firstName',
+                                  contentPadding: const EdgeInsets.only(
+                                    left: 1.0, bottom: 8.0, top: 25.0
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                  //draw underline
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                ),
+                                validator:(value) {
+                                  if(value!.isEmpty){
+                                    return "firstName cannot be empty";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
+                                onChanged: (value){
+                                  
+                                },
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
+                              TextFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                controller: lastNameController,
+                                decoration: InputDecoration(
+                                  hintText: 'lastName',
+                                  contentPadding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 8.0, top: 15.0
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                  //draw underline
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                ),
+                                validator:(value) {
+                                  if(value!.isEmpty){
+                                    return "lastName cannot be empty";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
+                                onChanged: (value){},
                               ),
-                              //draw underline
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
+                              TextFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                controller: emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                decoration: InputDecoration(
+                                  hintText: 'email',
+                                  contentPadding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 8.0, top: 15.0
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                  //draw underline
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                ),
+                                validator:(value) {
+                                  if(value!.isEmpty){
+                                    return "Email cannot be empty";
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
+                                onChanged: (value){},
                               ),
-                            ),
-                            validator:(value) {
-                              if(value!.isEmpty){
-                                return "firstName cannot be empty";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
-                            onChanged: (value){
-                              
-                            },
+                              TextFormField(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                controller: passwordController,
+                                obscureText: _isObscure,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                        icon: Icon(_isObscure
+                                            ? Icons.visibility_off
+                                            : Icons.visibility),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        }
+                                        ),
+                                  
+                                  hintText: 'password',
+                                  contentPadding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 8.0, top: 15.0
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                  //draw underline
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: new BorderSide(color: Colors.black),
+                                    borderRadius: new BorderRadius.circular(20),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if(value!.isEmpty){
+                                    return "password cannot be empty";
+                                  }
+                                  
+                                  else{
+                                    return null;
+                                  }
+                                },
+                                onChanged: (value) {},
+                              ),
+                            ],
                           ),
-                          TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            controller: lastNameController,
-                            decoration: InputDecoration(
-                              hintText: 'lastName',
-                              contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 15.0
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
-                              ),
-                              //draw underline
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
-                              ),
-                            ),
-                            validator:(value) {
-                              if(value!.isEmpty){
-                                return "lastName cannot be empty";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
-                            onChanged: (value){},
-                          ),
-                          TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            decoration: InputDecoration(
-                              hintText: 'email',
-                              contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 15.0
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
-                              ),
-                              //draw underline
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
-                              ),
-                            ),
-                            validator:(value) {
-                              if(value!.isEmpty){
-                                return "Email cannot be empty";
-                              }
-                              else{
-                                return null;
-                              }
-                            },
-                            onChanged: (value){},
-                          ),
-                          TextFormField(
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            controller: passwordController,
-                            obscureText: _isObscure,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                    icon: Icon(_isObscure
-                                        ? Icons.visibility_off
-                                        : Icons.visibility),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isObscure = !_isObscure;
-                                      });
-                                    }
-                                    ),
-                              
-                              hintText: 'password',
-                              contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 15.0
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
-                              ),
-                              //draw underline
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                                borderRadius: new BorderRadius.circular(20),
-                              ),
-                            ),
-                            validator: (value) {
-                              if(value!.isEmpty){
-                                return "password cannot be empty";
-                              }
-                              
-                              else{
-                                return null;
-                              }
-                            },
-                            onChanged: (value) {},
-                          ),
-                        ],
-                      ),
+                        ),
                     ),
                   ),
 
@@ -259,89 +261,93 @@ class _RegisterView extends State<Register>{
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 70,
-                    child: 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          //margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                //change the color of button
-                                backgroundColor: Colors.amber,
-                                //change the border to rounded side
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                  Expanded(
+                    child:
+                      SizedBox(
+                      height: 70,
+                      child: 
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            //margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  //change the color of button
+                                  backgroundColor: Colors.amber,
+                                  //change the border to rounded side
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                                  ),
+                                  //construct shadow color
+                                  elevation: 10,
+                                  shadowColor: const Color.fromARGB(255, 92, 90, 85),
+                                ).copyWith(
+                                  //change color onpressed
+                                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                                    (Set<MaterialState> states) {  
+                                      if (states.contains(MaterialState.pressed))
+                                        return Colors.blue;
+                                        return null; // Defer to the widget's default.
+                                    }),
                                 ),
-                                //construct shadow color
-                                elevation: 10,
-                                shadowColor: const Color.fromARGB(255, 92, 90, 85),
-                              ).copyWith(
-                                //change color onpressed
-                                overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {  
-                                    if (states.contains(MaterialState.pressed))
-                                      return Colors.blue;
-                                      return null; // Defer to the widget's default.
-                                  }),
-                              ),
-                            onPressed: () async { 
-                              final email = emailController.text;
-                              final password = passwordController.text;
-                              final fName = firstNameController.text;
-                              final lName = lastNameController.text;
-                              if(_formkey.currentState!.validate()) {
-                                await AuthService.firebase().createUser(email: email, password: password)
-                                .then((value) => postDetailsToFirestore(fName, lName, email, role));
-                              }
-                              try{
-                                //initial sign up/register
-                                setState(() {
-                                  showProgress = true;
-                                });
-                                AuthService.firebase().sendEmailVerification();
+                              onPressed: () async { 
+                                final email = emailController.text;
+                                final password = passwordController.text;
+                                final fName = firstNameController.text;
+                                final lName = lastNameController.text;
+                                if(_formkey.currentState!.validate()) {
+                                  await AuthService.firebase().createUser(email: email, password: password)
+                                  .then((value) => postDetailsToFirestore(fName, lName, email, role));
+                                }
+                                try{
+                                  //initial sign up/register
+                                  setState(() {
+                                    showProgress = true;
+                                  });
+                                  AuthService.firebase().sendEmailVerification();
+                                  
+                                  //pushNamed->will not replace the page to new page, just appear on it
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.of(context).pushNamed(verifyEmailRoute);
                                 
-                                //pushNamed->will not replace the page to new page, just appear on it
-                                // ignore: use_build_context_synchronously
-                                Navigator.of(context).pushNamed(verifyEmailRoute);
-                              
-                              }on WeakPasswordAuthException{
-                                // ignore: use_build_context_synchronously
-                                await showErrorDialog(
-                                    context, 
-                                    'Weak password'
+                                }on WeakPasswordAuthException{
+                                  // ignore: use_build_context_synchronously
+                                  await showErrorDialog(
+                                      context, 
+                                      'Weak password'
+                                    );
+                                }on EmailAlreadyInUseAuthException{
+                                  // ignore: use_build_context_synchronously
+                                  await showErrorDialog(
+                                      context, 
+                                      'Email is already in use'
+                                    );
+                                }on InvalidEmailAuthException{
+                                  // ignore: use_build_context_synchronously
+                                  await showErrorDialog(
+                                      context, 
+                                      'Invalid email entered'
+                                    );
+                                }on GenericAuthException{
+                                  // ignore: use_build_context_synchronously
+                                  await showErrorDialog(
+                                      context, 
+                                    'Failed to register',
                                   );
-                              }on EmailAlreadyInUseAuthException{
-                                // ignore: use_build_context_synchronously
-                                await showErrorDialog(
-                                    context, 
-                                    'Email is already in use'
-                                  );
-                              }on InvalidEmailAuthException{
-                                // ignore: use_build_context_synchronously
-                                await showErrorDialog(
-                                    context, 
-                                    'Invalid email entered'
-                                  );
-                              }on GenericAuthException{
-                                // ignore: use_build_context_synchronously
-                                await showErrorDialog(
-                                    context, 
-                                  'Failed to register',
-                                );
-                              }
-                            }, 
-                            child: Text(
-                              'Register',
-                              style: TextStyle(color: Colors.black, fontSize: 17),
+                                }
+                              }, 
+                              child: Text(
+                                'Register',
+                                style: TextStyle(color: Colors.black, fontSize: 17),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ), 
                   ),
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

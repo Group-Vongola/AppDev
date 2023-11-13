@@ -4,6 +4,7 @@ import 'package:flutter_application_1/constants/routes.dart';
 import 'package:flutter_application_1/mainPage/business_owner_page/owner_homepage.dart';
 import 'package:flutter_application_1/mainPage/customer_page/cust_homepage.dart';
 import 'package:flutter_application_1/mainPage/customer_page/cust_profile.dart';
+import 'package:flutter_application_1/mainPage/customer_page/edit_profie.dart';
 import 'package:flutter_application_1/mainPage/deliveryman_page/delivery_homepage.dart';
 import 'package:flutter_application_1/mainPage/login_page.dart';
 import 'package:flutter_application_1/mainPage/register_page.dart';
@@ -31,17 +32,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // title: ,
       // theme: ThemeData(),
-      home: const CustomerProfilePage(),
+      home: const EditProfilePage(),
       routes: {
-        loginRoute:(context) => const LoginPage(),
-        registerRoute:(context) => const Register(),
-        verifyEmailRoute:(context) => const VerifyEmailView(),
-        welcomeRoute:(context) => const WelcomePage(),
-        customerRoute:(context) => const CustomerHomePage(),
-        businessOwnerRoute:(context) => const BusinessOwnerHomePage(),
-        deliveryManOwnerRoute:(context) => const DeliverymanHomePage(),
-        custProfileRoute:(context) => const CustomerProfilePage(),
-        
+        loginRoute: (context) => const LoginPage(),
+        registerRoute: (context) => const Register(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
+        welcomeRoute: (context) => const WelcomePage(),
+        customerRoute: (context) => const CustomerHomePage(),
+        businessOwnerRoute: (context) => const BusinessOwnerHomePage(),
+        deliveryManOwnerRoute: (context) => const DeliverymanHomePage(),
+        custProfileRoute: (context) => const CustomerProfilePage(),
+        editProfileRoute: (context) => const EditProfilePage(),
       },
     );
   }

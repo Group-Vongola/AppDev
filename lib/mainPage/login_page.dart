@@ -76,6 +76,9 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person_outline),
                           hintText: 'Enter your email here',
+                          contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 15.0
+                          ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: new BorderSide(color: Colors.black),
                             borderRadius: new BorderRadius.circular(20),
@@ -109,6 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.lock_outline),
                           hintText: 'Enter your password here',
+                          contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 15.0
+                          ),
                           suffixIcon: IconButton(
                             icon: Icon(_isObscure
                                 ? Icons.visibility_off
